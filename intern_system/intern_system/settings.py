@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-ur&#vv_sx_z9e17%tfnu*r=_6tc#i+0icm-t%p87v7jp1w_51v
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "intern-tracking-system.onrender.com",
+    "intern-tracking-system-tedf.onrender.com",
     '127.0.0.1',
     'localhost'
 ]
