@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Intern Tracking Management System
+    </title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+
+        /* GLOBAL */
+        body{
+            background-color: #edf2f7;
+            color: #111827;
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        a{
+            color: #0f4c81;
+            text-decoration: none;
+        }
+
+        a:hover{
+            color: #0b3e6b;
+        }
+
+        /* NAVBAR */
+        .navbar{
+            background: #0f4c81;
+            padding: 16px 24px;
+            box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
+        }
+
+        .navbar-brand{
+            font-weight: 700;
+            color: white !important;
+            font-size: 22px;
+            letter-spacing: 0.02em;
+        }
+
+        .navbar-toggler{
+            border: none;
+        }
+
+        .navbar-toggler:focus{
+            box-shadow: none;
+        }
+
+        .nav-link{
+            color: white !important;
+            font-weight: 600;
+            margin-left: 12px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover{
+            color: #dbeafe !important;
+        }
+
+        .nav-btn{
+            margin-left: 10px;
+            border-radius: 10px;
+            font-weight: 600;
+            padding: 10px 18px;
+        }
+
+        .content-container{
+            background: #ffffff;
+            padding: 32px;
+            border-radius: 24px;
+            box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+            margin-top: 28px;
+            margin-bottom: 28px;
+        }
+
+        .dashboard-title,
+        .page-title,
+        .section-title{
+            color: #0f3c68;
+            font-weight: 700;
+            margin-bottom: 1.75rem;
+            text-align: center;
+        }
+
+        .glass-card,
+        .section-card,
+        .form-card,
+        .success-card,
+        .pending-card,
+        .comment-card,
+        .application-card,
+        .progress-card,
+        .intern-card,
+        .summary-card{
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 22px;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.06);
+        }
+
+        .glass-card:hover,
+        .section-card:hover,
+        .form-card:hover,
+        .comment-card:hover,
+        .intern-card:hover,
+        .summary-card:hover{
+            transform: translateY(-2px);
+            transition: transform 0.25s ease;
+        }
+
+        .page-section{
+            padding: 1.5rem 0;
+        }
+
+        .table-responsive{
+            overflow-x: auto;
+        }
+
+        .table{
+            color: #111827;
+            background: #ffffff;
+        }
+
+        .table th{
+            background-color: #f1f5f9;
+            color: #0f3c68;
+            border-color: #e2e8f0;
+            font-weight: 700;
+        }
+
+        .table td{
+            background-color: #ffffff;
+            border-color: #e2e8f0;
+        }
+
+        .table a{
+            color: #0f4c81;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .table a:hover{
+            color: #0b3e6b;
+        }
+
+        .form-control,
+        .form-select,
+        textarea,
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        select,
+        textarea{
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            box-shadow: none;
+            padding: 0.9rem 1rem;
+            background: #ffffff;
+            box-sizing: border-box;
+        }
+
+        label,
+        .form-label{
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #0f3c68;
+        }
+
+        .form-control:focus,
+        .form-select:focus,
+        textarea:focus{
+            border-color: #2563eb;
+            box-shadow: 0 0 0 0.15rem rgba(37, 99, 235, 0.18);
+        }
+
+        form p {
+            margin-bottom: 1rem;
+        }
+
+        form p label,
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #0f3c68;
+        }
+
+        form p input,
+        form p select,
+        form p textarea {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .btn-primary,
+        .btn.btn-primary{
+            background-color: #0f4c81;
+            border-color: #0f4c81;
+            color: white;
+        }
+
+        .btn-primary:hover,
+        .btn.btn-primary:hover{
+            background-color: #0d3d6a;
+            border-color: #0d3d6a;
+        }
+
+        .btn-success,
+        .btn-danger,
+        .btn-warning,
+        .btn-info{
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .btn-submit,
+        .btn-save,
+        .btn-action,
+        .btn-custom{
+            border-radius: 14px;
+            font-weight: 700;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            background: linear-gradient(135deg, #0f4c81 0%, #0f766e 100%);
+            border-color: #0f4c81;
+            color: white;
+        }
+
+        /* Square-style action buttons used in footers and detail pages */
+        .btn-square{
+            border-radius: 8px !important;
+            padding: 0.65rem 1rem !important;
+            min-width: 140px;
+            height: 56px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .action-row{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-submit:hover,
+        .btn-save:hover,
+        .btn-action:hover,
+        .btn-custom:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px rgba(15, 23, 42, 0.16);
+        }
+
+        .top-banner{
+            background: linear-gradient(135deg, #0f4c81 0%, #1f6ba8 100%);
+            color: white;
+            padding: 2rem 1.5rem;
+            border-radius: 22px 22px 0 0;
+        }
+
+        .intern-title{
+            color: #f8fafc;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-top: 1rem;
+        }
+
+        .intern-subtitle{
+            color: #dbeafe;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-section{
+            padding: 2rem;
+        }
+
+        .profile-name{
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f3c68;
+        }
+
+        .department-text{
+            color: #475569;
+        }
+
+        .note-box{
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 18px;
+            border-radius: 14px;
+            color: #0f172a;
+        }
+
+        .password-card,
+        .success-card,
+        .pending-card,
+        .comment-card,
+        .application-card,
+        .progress-card,
+        .intern-card{
+            background: #ffffff;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 22px;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.06);
+        }
+
+        .password-title,
+        .comment-title,
+        .form-title,
+        .intern-title{
+            color: #0f3c68;
+            font-weight: 700;
+        }
+
+        .password-subtitle,
+        .comment-subtitle,
+        .form-subtitle,
+        .intern-subtitle{
+            color: #475569;
+        }
+
+        .icon-circle{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 1.25rem;
+            font-size: 2.25rem;
+            background: linear-gradient(135deg, #0f4c81 0%, #1f6ba8 100%);
+            color: #ffffff;
+            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.15);
+        }
+
+        .btn-change{
+            background: linear-gradient(135deg, #0f4c81 0%, #1f6ba8 100%);
+            border-color: #0f4c81;
+            color: white;
+        }
+
+        .summary-number{
+            font-size: 3rem;
+            font-weight: 700;
+            color: #0f3c68;
+        }
+
+        .back-link{
+            color: #0f4c81;
+            font-weight: 700;
+        }
+
+        .back-link:hover{
+            color: #0b3e6b;
+            text-decoration: underline;
+        }
+
+        .success-icon,
+        .comment-icon,
+        .intern-icon{
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 1.25rem;
+            font-size: 2.25rem;
+            background: linear-gradient(135deg, #0f4c81 0%, #1f6ba8 100%);
+            color: #ffffff;
+            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.15);
+        }
+
+        .status-page{
+            background: #f8fafc;
+        }
+
+        .status-shell{
+            min-height: 70vh;
+        }
+
+        .status-card{
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.1);
+            overflow: hidden;
+        }
+
+        .status-header{
+            padding: 3rem 2rem;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .status-header.success{
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .status-header.pending{
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .status-header-icon{
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .status-header h1{
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .status-body{
+            padding: 3rem 2.5rem;
+            text-align: center;
+        }
+
+        .status-body p{
+            color: #475569;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .score-box{
+            border-radius: 20px;
+            padding: 1.75rem;
+            text-align: center;
+            color: white;
+            min-height: 180px;
+        }
+
+        .score-box h1{
+            font-size: 3rem;
+            margin-top: 0.75rem;
+        }
+
+        .comment-box{
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 1.25rem;
+        }
+
+        .profile-image{
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 5px solid rgba(15, 23, 42, 0.08);
+        }
+
+        .badge{
+            border-radius: 999px;
+            font-weight: 700;
+            padding: 0.55em 0.9em;
+        }
+
+        footer{
+            padding: 20px;
+            text-align: center;
+            background: #0f4c81;
+            color: white;
+            font-size: 14px;
+        }
+
+        @media (max-width: 992px){
+            .navbar-brand{
+                font-size: 18px;
+            }
+
+            .content-container{
+                padding: 24px;
+            }
+        }
+
+        @media (max-width: 768px){
+            .content-container{
+                padding: 18px;
+                margin-top: 18px;
+            }
+
+            .navbar-collapse{
+                padding-top: 1rem;
+            }
+
+            .nav-btn,
+            .nav-link{
+                width: 100%;
+                margin: 0.35rem 0;
+            }
+
+            h1{font-size: 28px;}
+            h2{font-size: 26px;}
+            h3{font-size: 22px;}
+            .btn,
+            .btn-primary,
+            .btn-submit,
+            .btn-save,
+            .btn-action,
+            .btn-custom{
+                width: 100%;
+            }
+
+            .success-icon,
+            .comment-icon,
+            .intern-icon{
+                width: 84px;
+                height: 84px;
+                font-size: 1.8rem;
+            }
+
+            .card,
+            .glass-card,
+            .section-card,
+            .form-card,
+            .password-card,
+            .success-card,
+            .pending-card,
+            .summary-card,
+            .application-card,
+            .intern-card,
+            .comment-card,
+            .progress-card{
+                padding: 1.5rem;
+            }
+
+            .success-card.p-5,
+            .pending-card.p-5,
+            .password-card.p-5{
+                padding: 1.5rem !important;
+            }
+
+            .status-shell{
+                min-height: auto;
+            }
+
+            .status-header{
+                padding: 2.25rem 1.25rem;
+            }
+
+            .status-header-icon{
+                font-size: 3rem;
+            }
+
+            .status-header h1{
+                font-size: 1.45rem;
+            }
+
+            .status-body{
+                padding: 2rem 1.25rem;
+            }
+
+            .status-body .btn,
+            .success-card .btn,
+            .pending-card .btn,
+            .password-card .btn{
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="/">
+
+            <i class="bi bi-shield-lock-fill"></i>
+
+            Police Intern Tracking System
+
+        </a>
+
+        <!-- MOBILE TOGGLE -->
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <!-- NAVBAR CONTENT -->
+        <div class="collapse navbar-collapse"
+             id="navbarNav">
+
+                <div class="ms-auto d-lg-flex align-items-center">
+                     {% block nav_buttons %}
+                     <a class="btn btn-light nav-btn"
+                         href="{% if request.user.userprofile.role == 'intern' %}{% url 'intern_dashboard' %}{% elif request.user.userprofile.role == 'police' %}{% url 'police_dashboard' %}{% elif request.user.userprofile.role == 'school' %}{% url 'school_dashboard' %}{% else %}{% url 'admin_dashboard' %}{% endif %}">
+
+                         Dashboard
+
+                     </a>
+
+                     <a class="btn btn-light nav-btn"
+                         href="/interns/">
+
+                         Interns
+
+                     </a>
+
+                     <a class="btn btn-danger nav-btn"
+                         href="/logout/">
+
+                         Logout
+
+                     </a>
+                     {% endblock %}
+
+                </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<!-- PAGE CONTENT -->
+<div class="{% block page_wrapper_class %}container{% endblock %}">
+
+    <div class="{% block content_wrapper_class %}content-container{% endblock %}">
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+
+    Intern Tracking Management System for Police Headquarters © 2026
+
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

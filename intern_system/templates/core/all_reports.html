@@ -1,0 +1,82 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="text-center mb-5">
+        Weekly Reports
+    </h2>
+
+    {% if reports %}
+
+        <div class="row">
+
+            {% for report in reports %}
+
+            <div class="col-md-4 mb-4">
+
+                <div class="card shadow-lg p-4">
+
+                    <h4>
+
+                        {{ report.intern.full_name }}
+
+                    </h4>
+
+                    <hr>
+
+                    <p>
+
+                        <strong>Rating:</strong>
+                        {{ report.overall_rating }}
+
+                    </p>
+
+                    <p>
+
+                        <strong>Generated:</strong>
+                        {{ report.week_start }}
+
+                    </p>
+
+                    <a href="{{ report.pdf_file.url }}"
+                       target="_blank"
+                       class="btn btn-primary w-100 mb-2">
+
+                        Open PDF Report
+
+                    </a>
+
+                    {% if user_role == 'admin' or user_role == 'police' %}
+                        <form method="post"
+                              action="{% url 'delete_report' report.id %}">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="btn btn-danger w-100">
+                                Delete Report
+                            </button>
+                        </form>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="alert alert-info text-center">
+
+            No Reports Available
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

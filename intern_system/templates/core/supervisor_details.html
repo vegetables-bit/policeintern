@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow p-5">
+
+        <h2 class="mb-4">
+            Supervisor Details
+        </h2>
+
+        <p>
+            <strong>Full Name:</strong>
+            {{ supervisor.full_name }}
+        </p>
+
+        <p>
+            <strong>Institution:</strong>
+            {{ supervisor.institution_name }}
+        </p>
+
+        <p>
+            <strong>Department:</strong>
+            {{ supervisor.department }}
+        </p>
+
+        <p>
+            <strong>Position:</strong>
+            {{ supervisor.position }}
+        </p>
+
+        <p>
+            <strong>Phone:</strong>
+            {{ supervisor.phone }}
+        </p>
+
+          <a href="{% url 'approve_school' supervisor.id %}"
+              class="btn btn-success">
+
+              Approve
+
+          </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

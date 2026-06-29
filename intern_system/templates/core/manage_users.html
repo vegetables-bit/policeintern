@@ -1,0 +1,121 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow p-4">
+
+        <h2 class="mb-4">
+            Manage Users
+        </h2>
+
+        <div class="mb-4 d-flex flex-wrap gap-2 align-items-center">
+            {% if is_ict_admin %}
+            <a href="{% url 'add_admin' %}"
+               class="btn btn-primary btn-sm">
+                Add New Admin
+            </a>
+
+            <a href="{% url 'add_police_supervisor' %}"
+               class="btn btn-success btn-sm">
+                Add Police Supervisor
+            </a>
+            {% endif %}
+
+            <a href="{% url 'view_admins' %}"
+               class="btn btn-secondary btn-sm">
+                View Admins
+            </a>
+        </div>
+
+        <table class="table table-bordered">
+
+            <tr>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+
+            {% for admin in admins %}
+
+            <tr>
+
+                <td>{{ admin.user.username }}</td>
+
+                <td>Admin</td>
+
+                <td>
+                    {% if is_ict_admin %}
+                    <a href="/delete-user/{{ admin.user.id }}/"
+                       class="btn btn-danger btn-sm">
+
+                       Delete
+
+                    </a>
+                    {% else %}
+                        <span class="text-muted">No actions</span>
+                    {% endif %}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+            {% for officer in police %}
+
+            <tr>
+
+                <td>{{ officer.user.username }}</td>
+
+                <td>Police Supervisor</td>
+
+                <td>
+                    {% if is_ict_admin %}
+                    <a href="/delete-user/{{ officer.user.id }}/"
+                       class="btn btn-danger btn-sm">
+
+                       Delete
+
+                    </a>
+                    {% else %}
+                        <span class="text-muted">No actions</span>
+                    {% endif %}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+            {% for school in schools %}
+
+            <tr>
+
+                <td>{{ school.user.username }}</td>
+
+                <td>School Supervisor</td>
+
+                <td>
+                    {% if is_ict_admin %}
+                    <a href="/delete-user/{{ school.user.id }}/"
+                       class="btn btn-danger btn-sm">
+
+                       Delete
+
+                    </a>
+                    {% else %}
+                        <span class="text-muted">No actions</span>
+                    {% endif %}
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

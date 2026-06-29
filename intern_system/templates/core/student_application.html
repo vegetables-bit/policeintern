@@ -1,0 +1,199 @@
+{% extends 'core/base.html' %}
+
+{% block nav_buttons %}
+<a class="btn btn-danger nav-btn" href="/logout/">Logout</a>
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="application-card shadow-lg p-5 bg-white rounded">
+
+                <div class="text-center mb-4">
+
+                    <h2 class="form-title text-primary fw-bold">
+                        Internship Application Form
+                    </h2>
+
+                    <p class="form-subtitle text-muted">
+                        Complete the form below to apply for internship placement.
+                    </p>
+
+                </div>
+
+                <form method="POST" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="mb-3">
+        <label>Image with a Full Visible Face</label>
+        {{ form.photo }}
+        {% if form.photo.errors %}
+            <div class="text-danger mt-2">{{ form.photo.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>Full Name</label>
+        {{ form.full_name }}
+        {% if form.full_name.errors %}
+            <div class="text-danger mt-2">{{ form.full_name.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>Gender</label>
+        {{ form.gender }}
+        {% if form.gender.errors %}
+            <div class="text-danger mt-2">{{ form.gender.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>Registration Number</label>
+        {{ form.reg_number }}
+        {% if form.reg_number.errors %}
+            <div class="text-danger mt-2">{{ form.reg_number.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>Email Address</label>
+        {{ form.email }}
+        {% if form.email.errors %}
+            <div class="text-danger mt-2">{{ form.email.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>Phone Number</label>
+        {{ form.phone_number }}
+        {% if form.phone_number.errors %}
+            <div class="text-danger mt-2">{{ form.phone_number.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>School / Institution</label>
+        {{ form.school_name }}
+        {% if form.school_name.errors %}
+            <div class="text-danger mt-2">{{ form.school_name.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>Program</label>
+        {{ form.program }}
+        {% if form.program.errors %}
+            <div class="text-danger mt-2">{{ form.program.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>Department</label>
+        {{ form.department }}
+        {% if form.department.errors %}
+            <div class="text-danger mt-2">{{ form.department.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>Year</label>
+        {{ form.year }}
+        {% if form.year.errors %}
+            <div class="text-danger mt-2">{{ form.year.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>Semester</label>
+        {{ form.semester }}
+        {% if form.semester.errors %}
+            <div class="text-danger mt-2">{{ form.semester.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>Date of Birth</label>
+        {{ form.date_of_birth }}
+        {% if form.date_of_birth.errors %}
+            <div class="text-danger mt-2">{{ form.date_of_birth.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>School ID Document</label>
+        {{ form.school_id }}
+        {% if form.school_id.errors %}
+            <div class="text-danger mt-2">{{ form.school_id.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>National ID Document</label>
+        {{ form.national_id }}
+        {% if form.national_id.errors %}
+            <div class="text-danger mt-2">{{ form.national_id.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>Application Letter</label>
+        {{ form.application_letter }}
+        {% if form.application_letter.errors %}
+            <div class="text-danger mt-2">{{ form.application_letter.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>Academic Transcript</label>
+        {{ form.transcript }}
+        {% if form.transcript.errors %}
+            <div class="text-danger mt-2">{{ form.transcript.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label>Recommendation Letter</label>
+        {{ form.recommendation_letter }}
+        {% if form.recommendation_letter.errors %}
+            <div class="text-danger mt-2">{{ form.recommendation_letter.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="alert alert-info mt-4">
+        <strong>NOTE:</strong>
+        Attendance, performance, activities and evaluations
+        will be updated later by the assigned Police Supervisor.
+    </div>
+
+    <button type="submit"
+            class="btn btn-primary w-100 mt-3">
+
+        Submit Application
+
+    </button>
+
+</form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

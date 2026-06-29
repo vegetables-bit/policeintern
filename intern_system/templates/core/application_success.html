@@ -1,0 +1,52 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-12 col-md-10 col-lg-8">
+
+            <div class="success-card shadow-lg p-5 text-center rounded-4">
+
+                <div class="success-icon">
+                    <i class="bi bi-check-circle-fill"></i>
+                </div>
+
+                <h2 class="text-success mt-3 fw-bold">
+                    Application Submitted Successfully
+                </h2>
+
+                <p class="mt-4 fs-5">
+
+                    Thank you for applying for internship placement.
+
+                    <br><br>
+
+                    Your application has been received successfully
+                    and is now pending review by the Police Administration.
+
+                    <br><br>
+
+                    You will receive updates and notifications
+                    through your Intern Dashboard.
+
+                </p>
+
+                <a href="{% url 'intern_dashboard' %}"
+                   class="btn btn-primary mt-4 px-4">
+
+                    Go to Dashboard
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

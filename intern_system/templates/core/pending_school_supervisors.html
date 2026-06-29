@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container-fluid py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-10">
+            <div class="card shadow-lg border-0 rounded-5">
+                <div class="card-body p-5">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <div>
+                            <h2 class="mb-1">Pending School Supervisors</h2>
+                            <p class="text-muted mb-0">Review and approve School Supervisor accounts before they gain access to the internship monitoring system.</p>
+                        </div>
+                        <a href="{% url 'admin_dashboard' %}" class="btn btn-outline-secondary">Back to Dashboard</a>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Institution</th>
+                                    <th scope="col">Department</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for supervisor in pending_supervisors %}
+                                <tr>
+                                    <td>{{ supervisor.full_name }}</td>
+                                    <td>{{ supervisor.institution }}</td>
+                                    <td>{{ supervisor.department }}</td>
+                                    <td><span class="badge bg-warning text-dark">Pending</span></td>
+                                    <td>
+                                        <a href="{% url 'approve_school' supervisor.id %}" class="btn btn-success btn-sm me-2">Approve</a>
+                                        <a href="{% url 'supervisor_details' supervisor.id %}" class="btn btn-primary btn-sm">View</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted py-4">No pending school supervisors at this time.</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

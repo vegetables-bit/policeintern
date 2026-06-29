@@ -1,0 +1,91 @@
+{% extends 'core/base.html' %}
+
+{% block nav_buttons %}
+<a class="btn btn-danger nav-btn" href="/logout/">Logout</a>
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="card shadow-lg p-5 mx-auto"
+         style="max-width: 600px;">
+
+        <h2 class="text-center mb-4">
+
+            Intern Registration
+
+        </h2>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="mb-3">
+
+                <label>Full Name</label>
+
+                <input type="text"
+                       name="full_name"
+                       class="form-control"
+                       required>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label>Institution</label>
+
+                <input type="text"
+                       name="institution"
+                       class="form-control"
+                       required>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label>Email</label>
+
+                <input type="email"
+                       name="email"
+                       class="form-control"
+                       required>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label>Username</label>
+
+                <input type="text"
+                       name="username"
+                       class="form-control"
+                       required>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label>Password</label>
+
+                <input type="password"
+                       name="password"
+                       class="form-control"
+                       required>
+
+            </div>
+
+            <button class="btn btn-primary w-100">
+
+                Create Account
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,202 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- PAGE TITLE -->
+    <h2 class="page-title text-center mb-4">
+        Student Internship Applications
+    </h2>
+
+    <!-- SUMMARY -->
+    <div class="row mb-4">
+
+        <!-- TOTAL -->
+        <div class="col-md-4 mb-3">
+
+            <div class="glass-card summary-card shadow p-4 text-center">
+
+                <h5>Total Applications</h5>
+
+                <div class="summary-number text-primary">
+
+                    {{ applications|length }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- APPROVED -->
+        <div class="col-md-4 mb-3">
+
+            <div class="glass-card summary-card shadow p-4 text-center">
+
+                <h5>Approved</h5>
+
+                <div class="summary-number text-success">
+
+                    {{ approved|length }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- PENDING -->
+        <div class="col-md-4 mb-3">
+
+            <div class="glass-card summary-card shadow p-4 text-center">
+
+                <h5>Pending</h5>
+
+                <div class="summary-number text-warning">
+
+                    {{ pending|length }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- APPLICATION TABLE -->
+    <div class="glass-card shadow p-4">
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>Name</th>
+                        <th>School</th>
+                        <th>Program</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for app in applications %}
+
+                    <tr>
+
+                        <!-- NAME -->
+                        <td>
+
+                            <strong>
+
+                                {{ app.full_name }}
+
+                            </strong>
+
+                        </td>
+
+                        <!-- SCHOOL -->
+                        <td>
+
+                            {{ app.school_name }}
+
+                        </td>
+
+                        <!-- PROGRAM -->
+                        <td>
+
+                            {{ app.program }}
+
+                        </td>
+
+                        <!-- STATUS -->
+                        <td>
+
+                            {% if app.status == 'Pending' %}
+
+                                <span class="badge bg-warning text-dark">
+
+                                    Pending
+
+                                </span>
+
+                            {% elif app.status == 'Approved' %}
+
+                                <span class="badge bg-success">
+
+                                    Approved
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-danger">
+
+                                    Rejected
+
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <!-- ACTIONS -->
+                        <td>
+
+                            <!-- VIEW DETAILS -->
+                            <a href="/application/{{ app.id }}/"
+                               class="btn btn-primary btn-sm mb-1">
+
+                               View Details
+
+                            </a>
+
+                            <!-- ASSIGN SUPERVISORS -->
+                            {% if app.status == 'Approved' and app.id %}
+
+                            <a href="{% url 'assign_supervisors' app.id %}"
+                               class="btn btn-warning btn-sm mb-1">
+
+                                Edit
+
+                            </a>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="5" class="text-center">
+
+                            No applications found.
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

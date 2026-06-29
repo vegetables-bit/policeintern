@@ -1,0 +1,224 @@
+{% extends 'core/admin_dashboard.html' %}
+
+{% block content %}
+<div class="container-fluid px-0 py-2">
+
+    <h2 class="dashboard-title mb-4">
+        <i class="bi bi-gear-fill me-2"></i> Admin Settings
+    </h2>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row g-4">
+        <!-- SYSTEM INFORMATION -->
+        <div class="col-12">
+            <div class="glass-card shadow p-4" style="border-left: 6px solid #0f4c81;">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                    <h4 class="section-title mb-0 text-start">
+                        <span class="me-2"><i class="bi bi-building"></i></span> System Information
+                    </h4>
+                </div>
+
+                <form method="post" action="{% url 'admin_settings' %}" enctype="multipart/form-data" class="mt-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="save_system" />
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">System Name</label>
+                            {{ system_form.system_name }}
+                            {% if system_form.system_name.errors %}
+                                <div class="invalid-feedback d-block">{{ system_form.system_name.errors|first }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Organization Name</label>
+                            {{ system_form.organization_name }}
+                            {% if system_form.organization_name.errors %}
+                                <div class="invalid-feedback d-block">{{ system_form.organization_name.errors|first }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Contact Email</label>
+                            {{ system_form.contact_email }}
+                            {% if system_form.contact_email.errors %}
+                                <div class="invalid-feedback d-block">{{ system_form.contact_email.errors|first }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Contact Phone Number</label>
+                            {{ system_form.contact_phone_number }}
+                            {% if system_form.contact_phone_number.errors %}
+                                <div class="invalid-feedback d-block">{{ system_form.contact_phone_number.errors|first }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label">System Logo Upload</label>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-md-6">
+                                    {{ system_form.system_logo }}
+                                    {% if system_form.system_logo.errors %}
+                                        <div class="invalid-feedback d-block">{{ system_form.system_logo.errors|first }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 text-md-end text-start">
+                                    {% if system_info.system_logo %}
+                                        <img src="{{ system_info.system_logo.url }}" alt="System Logo" class="img-fluid" style="max-height:90px; border-radius:12px; border:1px solid rgba(15,23,42,0.08); padding:4px; background:#fff;" />
+                                    {% else %}
+                                        <span class="text-muted"><i class="bi bi-image"></i> No logo uploaded yet.</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-row mt-4">
+                        <button type="submit" class="btn btn-submit">
+                            <i class="bi bi-save2 me-2"></i> Save Changes
+                        </button>
+                        <a href="{% url 'admin_settings' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-2"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- PROFILE SETTINGS -->
+        <div class="col-12">
+            <div class="glass-card shadow p-4" style="border-left: 6px solid #10b981;">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                    <h4 class="section-title mb-0 text-start">
+                        <span class="me-2"><i class="bi bi-person-circle"></i></span> Profile Settings
+                    </h4>
+                </div>
+
+                <form method="post" action="{% url 'admin_settings' %}" enctype="multipart/form-data" class="mt-4">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="save_profile" />
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Full Name</label>
+                            {{ profile_form.full_name }}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Email Address</label>
+                            {{ profile_form.email }}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Phone Number</label>
+                            {{ profile_form.phone_number }}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Profile Picture Upload</label>
+                            {{ profile_form.profile_picture }}
+                        </div>
+
+                        <div class="col-12">
+                            <div class="d-flex align-items-center gap-3 flex-wrap">
+                                <div>
+                                    {% if settings_profile.profile_picture %}
+                                        <img src="{{ settings_profile.profile_picture.url }}" alt="Profile" class="profile-image" style="width:110px; height:110px;" />
+                                    {% else %}
+                                        <div class="profile-image d-flex align-items-center justify-content-center" style="width:110px; height:110px; background:#f1f5f9;">
+                                            <i class="bi bi-person-vcard" style="font-size:2rem; color:#0f4c81;"></i>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="text-muted">
+                                    <i class="bi bi-info-circle me-2"></i>
+                                    Current picture will remain if you don’t upload a new one.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-row mt-4">
+                        <button type="submit" class="btn btn-submit">
+                            <i class="bi bi-pencil-square me-2"></i> Update Profile
+                        </button>
+                        <a href="{% url 'admin_settings' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-2"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- CHANGE PASSWORD -->
+        <div class="col-12">
+            <div class="glass-card shadow p-4" style="border-left: 6px solid #3b82f6;">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                    <h4 class="section-title mb-0 text-start">
+                        <span class="me-2"><i class="bi bi-shield-lock"></i></span> Change Password
+                    </h4>
+                </div>
+
+                <form method="post" action="{% url 'change_admin_password' %}" class="mt-4">
+                    {% csrf_token %}
+
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label">Current Password</label>
+                            {{ change_password_form.old_password }}
+                            {% if change_password_form.old_password.errors %}
+                                <div class="invalid-feedback d-block">{{ change_password_form.old_password.errors|first }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">New Password</label>
+                            {{ change_password_form.new_password1 }}
+                            {% if change_password_form.new_password1.errors %}
+                                <div class="invalid-feedback d-block">{{ change_password_form.new_password1.errors|first }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label">Confirm New Password</label>
+                            {{ change_password_form.new_password2 }}
+                            {% if change_password_form.new_password2.errors %}
+                                <div class="invalid-feedback d-block">{{ change_password_form.new_password2.errors|first }}</div>
+                            {% endif %}
+                        </div>
+
+                        {% if change_password_form.non_field_errors %}
+                            <div class="col-12">
+                                {% for err in change_password_form.non_field_errors %}
+                                    <div class="alert alert-danger">{{ err }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="action-row mt-4">
+                        <button type="submit" class="btn btn-submit">
+                            <i class="bi bi-arrow-repeat me-2"></i> Change Password
+                        </button>
+                        <a href="{% url 'admin_settings' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-x-circle me-2"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+

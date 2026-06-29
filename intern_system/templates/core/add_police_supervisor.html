@@ -1,0 +1,136 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-7">
+
+            <div class="card shadow p-5">
+
+                <h2 class="text-center mb-4">
+
+                    Add Police Supervisor
+
+                </h2>
+
+                <form method="POST">
+
+    {% csrf_token %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        {{ form.full_name }}
+        {% if form.full_name.errors %}
+            <div class="text-danger mt-1">{{ form.full_name.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Police ID</label>
+        {{ form.police_id }}
+        {% if form.police_id.errors %}
+            <div class="text-danger mt-1">{{ form.police_id.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Email Address</label>
+        {{ form.email }}
+        {% if form.email.errors %}
+            <div class="text-danger mt-1">{{ form.email.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Phone Number</label>
+        {{ form.phone }}
+        {% if form.phone.errors %}
+            <div class="text-danger mt-1">{{ form.phone.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Police Rank</label>
+        {{ form.rank }}
+        {% if form.rank.errors %}
+            <div class="text-danger mt-1">{{ form.rank.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Department</label>
+        {{ form.department }}
+        {% if form.department.errors %}
+            <div class="text-danger mt-1">{{ form.department.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Station</label>
+        {{ form.station }}
+        {% if form.station.errors %}
+            <div class="text-danger mt-1">{{ form.station.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Username</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+            <div class="text-danger mt-1">{{ form.username.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        {{ form.password }}
+        {% if form.password.errors %}
+            <div class="text-danger mt-1">{{ form.password.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Confirm Password</label>
+        {{ form.confirm_password }}
+        {% if form.confirm_password.errors %}
+            <div class="text-danger mt-1">{{ form.confirm_password.errors.0 }}</div>
+        {% endif %}
+    </div>
+
+    {% if form.non_field_errors %}
+        <div class="alert alert-danger">
+            {% for err in form.non_field_errors %}
+                <div>{{ err }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+                    <button type="submit"
+                        class="btn btn-success w-100">
+
+                          Add Police Supervisor
+
+                    </button>
+
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

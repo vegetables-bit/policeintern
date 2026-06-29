@@ -1,0 +1,56 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="container-fluid py-5 status-page">
+
+    <div class="row justify-content-center align-items-center status-shell">
+
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+
+            <div class="status-card rounded-4">
+
+                <!-- PENDING HEADER -->
+                <div class="status-header pending">
+
+                    <div class="status-header-icon">
+                        <i class="bi bi-hourglass-split"></i>
+                    </div>
+
+                    <h1>
+                        Account Pending Approval
+                    </h1>
+
+                </div>
+
+                <!-- MESSAGE -->
+                <div class="status-body">
+
+                    <p>
+                        Thank you for creating your School Supervisor account.
+                        <br><br>
+                        Your account is currently under review by the administrator. You will be notified once your account has been approved.
+                        <br><br>
+                        <strong style="color: #0f3c68;">Typical approval time: 1-2 business days</strong>
+                    </p>
+
+                    <!-- ACTION BUTTON -->
+                    <div style="margin-top: 2rem;">
+                        <a href="{% url 'login' %}"
+                           class="btn btn-primary btn-lg px-5">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>
+                            Back to Login
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends 'core/base.html' %}
+
+{% block nav_buttons %}
+<a class="btn btn-danger nav-btn" href="/logout/">Logout</a>
+{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+            <h2 class="page-title text-start mb-1">Messages</h2>
+            <p class="text-muted mb-0">Secure communication center</p>
+        </div>
+        <a href="{% url 'compose_message' %}" class="btn btn-primary">
+            <i class="bi bi-pencil-square"></i> Compose Message
+        </a>
+    </div>
+
+    {% if latest_unread_message %}
+        <div class="alert alert-info">
+            New message from {{ latest_unread_message.sender.get_full_name|default:latest_unread_message.sender.username }}
+        </div>
+    {% endif %}
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <a href="{% url 'inbox' %}" class="glass-card d-block p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-1">Inbox</h5>
+                        <span class="text-muted">{{ inbox_messages|length }} received</span>
+                    </div>
+                    {% if unread_count %}
+                        <span class="badge bg-danger">{{ unread_count }}</span>
+                    {% endif %}
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'sent_messages' %}" class="glass-card d-block p-4 h-100">
+                <h5 class="mb-1">Sent Messages</h5>
+                <span class="text-muted">{{ sent_messages|length }} sent</span>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'compose_message' %}" class="glass-card d-block p-4 h-100">
+                <h5 class="mb-1">Compose Message</h5>
+                <span class="text-muted">Start a secure conversation</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="glass-card p-4 mb-4">
+        <h4 class="mb-3">Assigned Message Contacts</h4>
+        <div class="row g-3">
+            {% for contact in message_contacts %}
+                <div class="col-md-6">
+                    <div class="border rounded p-3 h-100">
+                        <h5 class="mb-1">{{ contact.label }}</h5>
+                        <p class="text-muted mb-3">{{ contact.user.email|default:contact.user.username }}</p>
+                        <div class="d-flex gap-2">
+                            <a class="btn btn-sm btn-primary" href="{% url 'compose_message' %}?receiver={{ contact.user.id }}">
+                                <i class="bi bi-pencil-square"></i> Compose
+                            </a>
+                            <a class="btn btn-sm btn-outline-primary" href="{% url 'conversation_view' contact.user.id %}">
+                                Open Conversation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-warning mb-0">
+                        No assigned message contacts are available yet.
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="glass-card p-4">
+        <h4 class="mb-3">Conversation History</h4>
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Participant</th>
+                        <th>Last Message</th>
+                        <th>Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for conversation in conversations %}
+                        <tr>
+                            <td>
+                                {{ conversation.user.get_full_name|default:conversation.user.username }}
+                                {% if conversation.unread_count %}
+                                    <span class="badge bg-danger ms-2">{{ conversation.unread_count }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ conversation.last_message.subject }}</td>
+                            <td>{{ conversation.last_message.sent_at|date:"M d, Y H:i" }}</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-primary" href="{% url 'conversation_view' conversation.user.id %}">
+                                    Open
+                                </a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">No conversations yet.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

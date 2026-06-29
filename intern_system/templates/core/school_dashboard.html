@@ -1,0 +1,167 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- TITLE -->
+    <h2 class="dashboard-title">
+        School Supervisor Dashboard
+    </h2>
+
+    <!-- SUMMARY CARDS -->
+    <div class="row g-4 align-items-stretch mb-4">
+
+        <div class="col-md-6 col-lg-4">
+
+            <div class="card shadow border-0 rounded-4 p-4 text-center h-100">
+
+                <h5 class="fw-bold text-primary">
+                    Assigned Interns
+                </h5>
+
+                <h1 class="fw-bold">
+
+                    {{ total_interns }}
+
+                </h1>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+
+            <a href="{% url 'messages_dashboard' %}" class="card shadow border-0 rounded-4 p-4 text-center d-block h-100">
+
+                <h5 class="fw-bold text-primary">
+                    Messages Center
+                </h5>
+
+                <h1 class="fw-bold">
+
+                    {{ unread_count|default:0 }}
+
+                </h1>
+
+                <span class="text-muted">Unread messages</span>
+
+                {% if unread_count %}
+                    <span class="badge bg-danger mt-2">{{ unread_count }}</span>
+                {% endif %}
+
+            </a>
+
+        </div>
+
+    </div>
+
+    {% if latest_unread_message %}
+        <div class="alert alert-info">
+            New message from {{ latest_unread_message.sender.get_full_name|default:latest_unread_message.sender.username }}
+        </div>
+    {% endif %}
+
+    <div class="glass-card shadow p-4 mb-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+                <h4 class="mb-1">Communication History</h4>
+                <p class="text-muted mb-0">Review inbox, sent messages, compose replies, and open conversation threads.</p>
+            </div>
+            <a href="{% url 'messages_dashboard' %}" class="btn btn-primary">
+                <i class="bi bi-chat-dots"></i> Open Messages
+            </a>
+        </div>
+    </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered align-middle">
+
+                <tr>
+                    <th>Student Name</th>
+                    <th>Department</th>
+                    <th>Latest Report</th>
+                </tr>
+
+                {% for intern in interns %}
+
+                <tr>
+
+                    <td>
+
+                        <a href="/intern/{{ intern.id }}/">
+
+                            {{ intern.full_name }}
+
+                        </a>
+
+                    </td>
+
+                    <td>
+
+                        {{ intern.department.name }}
+
+                    </td>
+
+                    <td>
+                        {% if intern.latest_report %}
+                            <a href="{{ intern.latest_report.pdf_file.url }}" class="btn btn-sm btn-outline-primary" target="_blank">
+                                Download Report
+                            </a>
+                        {% else %}
+                            <span class="text-muted">No report yet</span>
+                        {% endif %}
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="3" class="text-center">
+
+                        No interns assigned
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="mt-4 action-row">
+
+        <a class="btn btn-primary btn-square"
+           href="{% url 'intern_list' %}">
+
+            View Interns
+
+        </a>
+
+        <a class="btn btn-info btn-square"
+           href="{% url 'messages_dashboard' %}">
+
+            Messages
+
+        </a>
+
+        <a class="btn btn-danger btn-square"
+           href="{% url 'logout' %}">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends 'core/base.html' %}
+
+{% block nav_buttons %}
+<a class="btn btn-danger nav-btn" href="/logout/">Logout</a>
+{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid py-5" style="background: #f8fafc;">
+
+    <div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+
+        <div class="col-lg-6 col-md-8">
+
+            <!-- PROFESSIONAL HEADER -->
+            <div style="background: linear-gradient(135deg, #0f4c81 0%, #1f6ba8 100%); color: white; padding: 2.5rem; border-radius: 16px 16px 0 0; text-align: center;">
+
+                <h1 style="font-size: 2.5rem; font-weight: 700; margin: 0; letter-spacing: -0.5px;">
+
+                    Account Registration
+
+                </h1>
+
+                <p style="margin: 0.75rem 0 0; font-size: 1.1rem; opacity: 0.95;">
+
+                    Select your account type
+
+                </p>
+
+            </div>
+
+            <!-- MAIN CARD -->
+            <div style="background: white; padding: 3rem 2.5rem; border-radius: 0 0 16px 16px; box-shadow: 0 20px 60px rgba(15, 23, 42, 0.1); border: 1px solid #e2e8f0;">
+
+                <div style="display: grid; gap: 1rem;">
+
+                    <!-- SCHOOL OPTION -->
+                    <a href="/register-school/"
+                       style="display: flex; align-items: center; justify-content: space-between; padding: 1.5rem; border: 2px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: #0f3c68; transition: all 0.3s ease; background: white;" 
+                       onmouseover="this.style.borderColor='#0f4c81'; this.style.backgroundColor='#f0f7ff';" 
+                       onmouseout="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='white';">
+
+                        <div>
+                            <h3 style="margin: 0; font-weight: 600; font-size: 1.15rem; color: #0f3c68;">
+                                <i class="bi bi-building" style="margin-right: 0.75rem; color: #0f4c81; font-size: 1.5rem;"></i>
+                                School Supervisor
+                            </h3>
+                            <p style="margin: 0.5rem 0 0; font-size: 0.95rem; color: #64748b;">
+                                Register as a school administrator
+                            </p>
+                        </div>
+                        <i class="bi bi-arrow-right" style="font-size: 1.5rem; color: #0f4c81;"></i>
+
+                    </a>
+
+                    <!-- INTERN OPTION -->
+                    <a href="/intern-register/"
+                       style="display: flex; align-items: center; justify-content: space-between; padding: 1.5rem; border: 2px solid #e2e8f0; border-radius: 12px; text-decoration: none; color: #0f3c68; transition: all 0.3s ease; background: white;" 
+                       onmouseover="this.style.borderColor='#0f4c81'; this.style.backgroundColor='#f0f7ff';" 
+                       onmouseout="this.style.borderColor='#e2e8f0'; this.style.backgroundColor='white';">
+
+                        <div>
+                            <h3 style="margin: 0; font-weight: 600; font-size: 1.15rem; color: #0f3c68;">
+                                <i class="bi bi-mortarboard-fill" style="margin-right: 0.75rem; color: #0f4c81; font-size: 1.5rem;"></i>
+                                Intern / Student
+                            </h3>
+                            <p style="margin: 0.5rem 0 0; font-size: 0.95rem; color: #64748b;">
+                                Register as an intern or student
+                            </p>
+                        </div>
+                        <i class="bi bi-arrow-right" style="font-size: 1.5rem; color: #0f4c81;"></i>
+
+                    </a>
+
+                </div>
+
+                <!-- BACK BUTTON -->
+                <div style="text-align: center; margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #e2e8f0;">
+
+                    <a href="/login/"
+                       style="display: inline-block; color: #0f4c81; text-decoration: none; font-weight: 600; padding: 0.75rem 1.5rem; border-radius: 8px; transition: all 0.3s ease; background: transparent;" 
+                       onmouseover="this.style.backgroundColor='#f0f7ff';" 
+                       onmouseout="this.style.backgroundColor='transparent';">
+
+                        ← Back to Login
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

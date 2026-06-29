@@ -1,0 +1,85 @@
+{% extends 'core/base.html' %}
+
+{% block nav_buttons %}
+<a class="btn btn-danger nav-btn" href="/logout/">Logout</a>
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8">
+
+            <div class="intern-card">
+
+                <!-- TOP HEADER -->
+                <div class="top-banner">
+
+                    <div class="intern-icon">
+                        👨‍💻
+                    </div>
+
+                    <h2 class="intern-title">
+                        Register Intern
+                    </h2>
+
+                    <p class="intern-subtitle">
+                        Police Headquarters Internship Management System
+                    </p>
+
+                </div>
+
+                <!-- FORM SECTION -->
+                <div class="form-section">
+
+                    <div class="note-box">
+
+                        <strong>NOTE:</strong>
+
+                        Attendance, performance,
+                        working days, and internship
+                        activities will later be updated
+                        by the assigned Police Supervisor.
+
+                    </div>
+
+                    <form method="POST"
+                          enctype="multipart/form-data">
+
+                        {% csrf_token %}
+
+                        {{ form.as_p }}
+
+                        <button type="submit"
+                                class="btn btn-save text-white w-100 mt-3">
+
+                            Save Intern
+
+                        </button>
+
+                    </form>
+
+                    <div class="text-center mt-4">
+
+                        <a href="/admin-dashboard/"
+                           class="back-link">
+
+                           ← Back to Dashboard
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% for application in applications %}
+
+<tr>
+
+    <td>{{ application.full_name }}</td>
+
+    <td>{{ application.school_name }}</td>
+
+    <td>{{ application.program }}</td>
+
+    <td>
+
+        {{ application.status }}
+
+    </td>
+
+    <td>
+
+    <a href="{% url 'application_detail' application.id %}"
+       class="btn btn-primary btn-sm">
+
+       View Details
+
+    </a>
+
+    {% if application.status == 'Approved' and application.id %}
+
+    <a href="{% url 'assign_supervisors' application.id %}"
+       class="btn btn-warning btn-sm">
+
+       Edit
+
+    </a>
+
+        {% endif %}
+
+    </td>
+
+</tr>
+
+{% endfor %}

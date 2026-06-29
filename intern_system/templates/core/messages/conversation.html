@@ -1,0 +1,60 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+            <h2 class="page-title text-start mb-1">
+                Conversation with {{ other.get_full_name|default:other.username }}
+            </h2>
+            <p class="text-muted mb-0">Messages are visible only to conversation participants.</p>
+        </div>
+        <a href="{% url 'messages_dashboard' %}" class="btn btn-light">Messages</a>
+    </div>
+
+    <div class="glass-card p-4 mb-4">
+        {% for message in conversation_messages %}
+            <div class="mb-3 p-3 rounded border {% if message.sender == request.user %}bg-light{% else %}bg-white{% endif %}">
+                <div class="d-flex flex-wrap justify-content-between gap-2 mb-2">
+                    <strong>
+                        {% if message.sender == request.user %}
+                            You
+                        {% else %}
+                            {{ message.sender.get_full_name|default:message.sender.username }}
+                        {% endif %}
+                    </strong>
+                    <span class="text-muted">{{ message.sent_at|date:"M d, Y H:i" }}</span>
+                </div>
+                <h6 class="mb-2">{{ message.subject }}</h6>
+                <p class="mb-2">{{ message.message_body|linebreaksbr }}</p>
+                <div class="d-flex flex-wrap gap-2 align-items-center">
+                    <span class="badge bg-secondary">{{ message.get_status_display }}</span>
+                    {% if message.attachment %}
+                        <a href="{{ message.attachment.url }}" target="_blank">Attachment</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-muted mb-0">No messages in this conversation yet.</p>
+        {% endfor %}
+    </div>
+
+    <div class="glass-card p-4">
+        <h4 class="mb-3">Reply</h4>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="subject">Subject</label>
+                <input id="subject" name="subject" class="form-control" value="Re: Conversation with {{ other.username }}">
+            </div>
+            <div class="mb-3">
+                <label for="message_body">Message</label>
+                <textarea id="message_body" name="message_body" class="form-control" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-reply"></i> Send Reply
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

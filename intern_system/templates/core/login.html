@@ -1,0 +1,502 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Intern Performance Tracking System</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+
+    body{
+
+        background:
+        linear-gradient(
+            rgba(15, 23, 42, 0.80),
+            rgba(30, 41, 59, 0.85)
+        ),
+
+        url('https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1974&auto=format&fit=crop');
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        min-height: 100vh;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        font-family: Arial, sans-serif;
+    }
+
+    .login-card{
+
+        width: 100%;
+        max-width: 520px;
+        min-width: 320px;
+
+        border: none;
+        border-radius: 20px;
+
+        resize: horizontal;
+        overflow: auto;
+
+        background: rgba(255,255,255,0.12);
+
+        backdrop-filter: blur(12px);
+
+        box-shadow:
+        0 8px 32px rgba(0,0,0,0.35);
+
+        color: white;
+    }
+
+    .card-header{
+
+        position: relative;
+        background:
+        linear-gradient(to right,
+        #1e293b,
+        #334155);
+
+        color: white;
+
+        text-align: center;
+
+        padding: 25px;
+    }
+
+    .card-header h2{
+
+        margin: 0;
+
+        font-weight: bold;
+
+        letter-spacing: 1px;
+    }
+
+    .card-body{
+
+        padding: 35px;
+    }
+
+    .form-control{
+
+        height: 52px;
+
+        border-radius: 12px;
+
+        border: none;
+
+        padding-left: 15px;
+
+        background: rgba(255,255,255,0.92);
+    }
+
+    .form-control:focus{
+
+        box-shadow:
+        0 0 10px rgba(59,130,246,0.6);
+
+        border: none;
+    }
+
+    .password-group {
+        position: relative;
+    }
+
+    .password-toggle {
+        position: absolute;
+        right: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #64748b;
+        font-size: 1.1rem;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .password-toggle:hover {
+        color: #ffffff;
+    }
+
+    .btn-login{
+
+        height: 52px;
+
+        border-radius: 12px;
+
+        font-weight: bold;
+
+        font-size: 16px;
+
+        background:
+        linear-gradient(to right,
+        #2563eb,
+        #1d4ed8);
+
+        border: none;
+
+        transition: 0.3s;
+    }
+
+    .btn-login:hover{
+
+        transform: translateY(-2px);
+
+        background:
+        linear-gradient(to right,
+        #1d4ed8,
+        #1e40af);
+    }
+
+    .forgot-link{
+
+        color: #e2e8f0;
+
+        text-decoration: none;
+
+        font-size: 14px;
+    }
+
+    .forgot-link:hover{
+
+        color: white;
+
+        text-decoration: underline;
+    }
+
+    .logo-icon{
+
+        font-size: 55px;
+
+        margin-bottom: 10px;
+
+        color: #60a5fa;
+    }
+
+    .system-title{
+
+        font-size: 14px;
+
+        opacity: 0.9;
+
+        margin-top: 5px;
+    }
+
+    .dropdown-menu{
+    min-width: 230px;
+    border-radius: 12px;
+    border: none;
+    padding: 10px;
+    }
+
+    .dropdown-item{
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 500;
+    }
+
+    .dropdown-item:hover{
+    background-color: #0d6efd;
+    color: white;
+    }
+
+    .create-account-button {
+        min-width: 180px;
+        white-space: nowrap;
+    }
+
+    .remember-row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .form-check-label {
+        color: #e2e8f0;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .register-prompt {
+        margin-top: 1rem;
+        font-size: 14px;
+        color: #cbd5e1;
+        text-align: center;
+    }
+
+    .register-prompt a {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .register-prompt a:hover {
+        text-decoration: underline;
+    }
+
+    @media (max-width: 576px) {
+        body {
+            padding: 1rem;
+            align-items: flex-start;
+        }
+
+        .create-account-button {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .login-card {
+            margin: 1rem auto;
+             max-width: 100%;
+        }
+
+        .card-header,
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .form-control {
+            height: 48px;
+        }
+
+        .btn-login {
+            height: 48px;
+            font-size: 15px;
+        }
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+
+    <div class="card shadow-lg login-card border-0">
+
+        <!-- HEADER -->
+        <div class="card-header text-center border-0 pt-5 pb-4">
+
+            <div class="logo-icon mb-3">
+                <i class="bi bi-shield-lock-fill"></i>
+            </div>
+
+            <h2 class="fw-bold text-primary">
+                Police Intern System
+            </h2>
+
+            <p class="system-title text-white">
+                Secure Internship Tracking Platform
+            </p>
+
+        </div>
+
+        <!-- BODY -->
+        <div class="card-body p-4">
+
+            <!-- LOGIN OPTIONS -->
+            <h5 class="text-center mb-4">
+
+                Sign In As
+
+            </h5>
+
+            <!-- REAL LOGIN FORM -->
+            <hr class="my-4">
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endif %}
+
+                <!-- ROLE -->
+                <div class="mb-3">
+
+                    <select class="form-select"
+                        name="role"
+                        id="roleSelect"
+                        onchange="toggleFields()"
+                        required>
+
+                    <option value="" {% if selected_role == "" %}selected{% endif %}>
+                        Select Login Role
+                    </option>
+
+                    <option value="admin" {% if selected_role == "admin" %}selected{% endif %}>
+                        Admin
+                    </option>
+
+                    <option value="police" {% if selected_role == "police" %}selected{% endif %}>
+                        Police Supervisor
+                    </option>
+
+                    <option value="school" {% if selected_role == "school" %}selected{% endif %}>
+                        School Supervisor
+                    </option>
+
+                    <option value="intern" {% if selected_role == "intern" %}selected{% endif %}>
+                        Intern / Student
+                    </option>
+
+                    </select>
+
+                </div>
+
+    <!-- USERNAME -->
+    <div class="mb-3">
+
+        <input
+            class="form-control"
+            type="text"
+            name="username"
+            placeholder="Enter Username"
+            value="{{ username|default:'' }}"
+            required
+        >
+
+    </div>
+
+    <!-- PASSWORD -->
+    <div class="mb-3 password-group">
+
+        <input
+            class="form-control"
+            type="password"
+            name="password"
+            id="passwordInput"
+            placeholder="Enter Password"
+            required
+        >
+
+        <span class="password-toggle" id="passwordToggle" title="Show / hide password">
+            <i class="bi bi-eye-fill"></i>
+        </span>
+
+    </div>
+
+    <!-- SCHOOL -->
+    <div class="mb-3 d-none"
+         id="schoolField">
+
+        <input
+            class="form-control"
+            type="text"
+            name="school"
+            placeholder="Enter School / Institution"
+        >
+
+    </div>
+
+    <!-- INSTITUTION -->
+    <div class="mb-3 d-none"
+         id="institutionField">
+
+        <input
+            class="form-control"
+            type="text"
+            name="institution"
+            placeholder="Enter Institution"
+        >
+
+    </div>
+
+            <div class="remember-row mb-3">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="remember_me" id="rememberMe">
+                    <label class="form-check-label" for="rememberMe">
+                        Remember Me
+                    </label>
+                </div>
+
+                <a class="forgot-link text-decoration-none fw-semibold"
+                   href="{% url 'password_reset' %}">
+                    Forgot Password?
+                </a>
+            </div>
+
+            <button class="btn btn-primary w-100 btn-login">
+
+                <i class="bi bi-box-arrow-in-right"></i>
+
+                Login
+
+            </button>
+
+            <p class="register-prompt">
+                Don't have an Account? <a href="{% url 'create_account' %}">Register here</a>
+            </p>
+
+    </form>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+
+function toggleFields(){
+
+    let role = document.getElementById("roleSelect").value;
+
+    let schoolField =
+        document.getElementById("schoolField");
+
+    let institutionField =
+        document.getElementById("institutionField");
+
+    schoolField.classList.add("d-none");
+    institutionField.classList.add("d-none");
+
+    if(role === "school"){
+
+        institutionField.classList.remove("d-none");
+
+    }
+
+    if(role === "intern"){
+
+        schoolField.classList.remove("d-none");
+
+    }
+
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    toggleFields();
+
+    const passwordToggle = document.getElementById('passwordToggle');
+    const passwordInput = document.getElementById('passwordInput');
+
+    if (passwordToggle && passwordInput) {
+        passwordToggle.addEventListener('click', function() {
+            const isPassword = passwordInput.getAttribute('type') === 'password';
+            passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+            passwordToggle.innerHTML = isPassword
+                ? '<i class="bi bi-eye-slash-fill"></i>'
+                : '<i class="bi bi-eye-fill"></i>';
+        });
+    }
+});
+
+</script>
+</body>
+</html>

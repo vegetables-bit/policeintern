@@ -1,0 +1,201 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- TITLE -->
+    <h2 class="dashboard-title">
+        Police Supervisor Dashboard
+    </h2>
+
+    <!-- SUMMARY CARD -->
+    <div class="row mb-4">
+
+        <div class="col-md-4">
+
+            <div class="glass-card shadow p-4 text-center">
+
+                <h4>Total Assigned Interns</h4>
+
+                <div class="intern-count">
+
+                    {{ interns|length }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <a href="{% url 'messages_dashboard' %}" class="glass-card shadow p-4 text-center d-block">
+
+                <h4>Messages Center</h4>
+
+                <div class="intern-count">
+
+                    {{ unread_count|default:0 }}
+
+                </div>
+
+                <span class="text-muted">Unread messages</span>
+
+                {% if unread_count %}
+                    <span class="badge bg-danger ms-2">{{ unread_count }}</span>
+                {% endif %}
+
+            </a>
+
+        </div>
+
+    </div>
+
+    {% if latest_unread_message %}
+        <div class="alert alert-info">
+            New message from {{ latest_unread_message.sender.get_full_name|default:latest_unread_message.sender.username }}
+        </div>
+    {% endif %}
+
+    <div class="glass-card shadow p-4 mb-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div>
+                <h4 class="mb-1">Communication History</h4>
+                <p class="text-muted mb-0">Review inbox, sent messages, compose replies, and open conversation threads.</p>
+            </div>
+            <a href="{% url 'messages_dashboard' %}" class="btn btn-primary">
+                <i class="bi bi-chat-dots"></i> Open Messages
+            </a>
+        </div>
+    </div>
+
+    <!-- INTERN TABLE -->
+<div class="glass-card shadow p-4 mb-4">
+
+    <h4 class="text-center mb-4">
+        Managed Interns
+    </h4>
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>Intern Name</th>
+                    <th>Department</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for intern in interns %}
+
+                <tr>
+
+                    <!-- INTERN NAME -->
+                    <td>
+
+                        <a href="/intern/{{ intern.id }}/">
+
+                            {{ intern.full_name }}
+
+                        </a>
+
+                    </td>
+
+                    <!-- DEPARTMENT -->
+                    <td>
+
+                        {{ intern.department.name }}
+
+                    </td>
+
+                    <!-- ACTION BUTTONS -->
+                    <td>
+
+                        <!-- UPDATE INTERN -->
+                        <a href="{% url 'update_intern' intern.id %}"
+                           class="btn btn-warning btn-sm mb-1">
+
+                            Update Intern
+
+                        </a>
+
+                        <!-- GENERATE REPORT -->
+                        <a href="{% url 'generate_report' intern.id %}"
+                           class="btn btn-success btn-sm mb-1">
+
+                            Generate Weekly Report
+
+                        </a>
+
+                        <!-- VIEW REPORTS -->
+                        <a href="{% url 'all_reports' %}"
+                           class="btn btn-primary btn-sm mb-1">
+
+                            View Reports
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="3" class="text-center">
+
+                        No interns assigned
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<!-- ACTION BUTTONS -->
+<div class="mt-4 action-row">
+
+    <a class="btn btn-primary btn-square"
+       href="{% url 'intern_list' %}">
+
+        View Interns
+
+    </a>
+
+    <a class="btn btn-info btn-square"
+       href="{% url 'messages_dashboard' %}">
+
+        Messages
+
+    </a>
+
+    <a class="btn btn-danger btn-square"
+       href="{% url 'logout' %}">
+
+        Logout
+
+    </a>
+
+</div>
+
+</div>
+
+{% endblock %}

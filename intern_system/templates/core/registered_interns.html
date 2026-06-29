@@ -1,0 +1,68 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">
+        Registered Interns
+    </h2>
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Action</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for intern in registered_interns %}
+
+            <tr>
+
+                <td>{{ forloop.counter }}</td>
+
+                <td>{{ intern.user.username }}</td>
+
+                <td>{{ intern.role }}</td>
+
+                <td>
+
+                    <a href="{% url 'delete_registered_intern' intern.user.id %}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Delete this user? This operation cannot be undone.');">
+
+                       Delete
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+
+                <td colspan="3">
+                    No registered interns found.
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,175 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="mb-4 text-center">
+        Internship Performance Tracking
+    </h2>
+
+    <div class="row g-4">
+
+        <div class="col-md-6">
+
+            <div class="score-box bg-primary shadow">
+
+                <h4>Attendance</h4>
+
+                <h1>
+                    {{ intern.attendance_percentage }}%
+                </h1>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="score-box bg-success shadow">
+
+                <h4>Performance Score</h4>
+
+                <h1>
+                    {{ intern.performance_score }}%
+                </h1>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row g-4 mt-4">
+        <div class="col-md-4">
+            <div class="score-box bg-light shadow">
+                <h5 class="text-dark">Present Days</h5>
+                <p class="text-dark">{{ intern.present_days }}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="score-box bg-light shadow">
+                <h5 class="text-dark">Absent Days</h5>
+                <p class="text-dark">{{ intern.absent_days }}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="score-box bg-light shadow">
+                <h5 class="text-dark">Late Days</h5>
+                <p class="text-dark">{{ intern.late_days }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mt-3">
+        <div class="col-md-6">
+            <div class="score-box bg-light shadow">
+                <h5 class="text-dark">Total Hours Worked</h5>
+                <p class="text-dark">{{ intern.total_hours_worked }}</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="score-box bg-light shadow">
+                <h5 class="text-dark">Weekly Rating</h5>
+                <p class="text-dark">{{ intern.overall_weekly_rating }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- WARNING -->
+
+    {% if intern.warning_message %}
+
+    <div class="alert alert-danger mt-4">
+
+        <h5>Warning Message</h5>
+
+        <p>
+            {{ intern.warning_message }}
+        </p>
+
+    </div>
+
+    {% endif %}
+
+    <!-- APPRECIATION -->
+
+    {% if intern.appreciation_message %}
+
+    <div class="alert alert-success mt-4">
+
+        <h5>Appreciation Message</h5>
+
+        <p>
+            {{ intern.appreciation_message }}
+        </p>
+
+    </div>
+
+    {% endif %}
+
+    <div class="card shadow p-4 mt-4">
+
+    <h3>
+        Weekly Activities
+    </h3>
+
+    {% if intern.activities_done %}
+        <p>{{ intern.activities_done }}</p>
+    {% else %}
+        <p>No weekly activities available yet.</p>
+    {% endif %}
+
+    <small class="text-muted">
+
+        Last Updated:
+        {{ intern.last_updated }}
+
+    </small>
+
+    {% if intern.is_dashboard_approved %}
+        <div class="mt-4 text-center">
+            {% if request.user.userprofile.role == 'police' and intern.police_supervisor and intern.police_supervisor.user == request.user %}
+                <a href="{% url 'generate_report' intern.id %}" class="btn btn-primary">Generate & Download Weekly Report</a>
+            {% elif request.user.userprofile.role == 'admin' %}
+                <a href="{% url 'generate_report' intern.id %}" class="btn btn-primary">Generate & Download Weekly Report</a>
+            {% else %}
+                {% if latest_report %}
+                    <a href="{{ latest_report.pdf_file.url }}" class="btn btn-secondary">Download Latest Weekly Report</a>
+                {% else %}
+                    <small class="text-muted">No weekly report available yet.</small>
+                {% endif %}
+            {% endif %}
+        </div>
+    {% endif %}
+
+        <div class="mt-4 text-center">
+            <small class="text-muted">Supervisor signature: {{ intern.police_supervisor_signature }}</small>
+        </div>
+    </div>
+
+    <!-- COMMENTS -->
+
+    <div class="progress-card shadow p-4 mt-4">
+
+        <h3>
+            Supervisor Comments
+        </h3>
+
+        {% if comments.exists %}
+            {% for comment in comments %}
+                <div class="border rounded p-3 mb-3">
+                    <strong>{{ comment.author.username }}</strong>
+                    <span class="badge bg-primary">{{ comment.comment_type }}</span>
+                    <p class="mt-2">{{ comment.comment_text }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No supervisor comments available yet.</p>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

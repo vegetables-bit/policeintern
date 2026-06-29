@@ -1,0 +1,134 @@
+{% extends 'core/base.html' %}
+
+{% block nav_buttons %}
+<a class="btn btn-danger nav-btn" href="/logout/">Logout</a>
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="card shadow-lg p-5 mx-auto" style="max-width:600px;">
+
+        <h2 class="text-center mb-4">School Supervisor Registration</h2>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label>Full Name</label>
+                {{ form.full_name }}
+                {% if form.full_name.errors %}
+                    <div class="text-danger mt-1">{{ form.full_name.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label>Institution</label>
+                {{ form.institution }}
+                {% if form.institution.errors %}
+                    <div class="text-danger mt-1">{{ form.institution.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label>Institution Name</label>
+                {{ form.institution_name }}
+                {% if form.institution_name.errors %}
+                    <div class="text-danger mt-1">{{ form.institution_name.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label>Employee ID</label>
+                {{ form.employee_id }}
+                {% if form.employee_id.errors %}
+                    <div class="text-danger mt-1">{{ form.employee_id.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label>Department</label>
+                {{ form.department }}
+                {% if form.department.errors %}
+                    <div class="text-danger mt-1">{{ form.department.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label>Position</label>
+                {{ form.position }}
+                {% if form.position.errors %}
+                    <div class="text-danger mt-1">{{ form.position.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label>Phone</label>
+                {{ form.phone }}
+                {% if form.phone.errors %}
+                    <div class="text-danger mt-1">{{ form.phone.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label>Username</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="text-danger mt-1">{{ form.username.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <hr>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {% for err in form.non_field_errors %}
+                        <div>{{ err }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="mb-3">
+                <label>Email</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="text-danger mt-1">{{ form.email.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label>Password</label>
+                {{ form.password }}
+                {% if form.password.errors %}
+                    <div class="text-danger mt-1">{{ form.password.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="mb-3">
+                <label>Confirm Password</label>
+                {{ form.confirm_password }}
+                {% if form.confirm_password.errors %}
+                    <div class="text-danger mt-1">{{ form.confirm_password.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <button class="btn btn-success w-100" type="submit">Create Account</button>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

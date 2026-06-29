@@ -1,0 +1,199 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="card shadow-lg p-4">
+
+        <h2 class="mb-4 text-primary">
+            All Interns
+        </h2>
+
+        <!-- FILTER FORM -->
+        <form method="GET" class="row mb-4">
+
+            <div class="col-md-4">
+
+                <input class="form-control"
+                       type="text"
+                       name="search"
+                       placeholder="Search by name">
+
+            </div>
+
+            <div class="col-md-4">
+
+                <select class="form-control"
+                        name="department">
+
+                    <option value="">
+                        All Departments
+                    </option>
+
+                    {% for dept in departments %}
+
+                        <option value="{{ dept.id }}">
+                            {{ dept.name }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <button class="btn btn-success w-100">
+
+                    Filter
+
+                </button>
+
+            </div>
+
+        </form>
+
+        <!-- INTERNS TABLE -->
+        <table class="table table-bordered table-striped table-hover">
+
+            <thead class="table-dark">
+
+                <tr>
+
+                    <th>Name</th>
+
+                    <th>Department</th>
+
+                    <th>Institution</th>
+
+                    <th>Period</th>
+
+                    <th>Status</th>
+
+                    {% if is_ict_admin %}
+                        <th>Actions</th>
+                    {% endif %}
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for intern in interns %}
+
+                <tr>
+
+                    <td>
+
+                        <a href="/intern/{{ intern.id }}/">
+
+                            {{ intern.full_name }}
+
+                        </a>
+
+                    </td>
+
+                    <td>
+
+                        {{ intern.department.name }}
+
+                    </td>
+
+                    <td>
+
+                        {{ intern.institution }}
+
+                    </td>
+
+                    <td>
+
+                        {{ intern.start_date }}
+                        -
+                        {{ intern.end_date }}
+
+                    </td>
+
+                    <!-- STATUS -->
+                    <td>
+
+                        {% if intern.is_active %}
+
+                            <span class="badge bg-success">
+
+                                Active
+
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-danger">
+
+                                Inactive
+
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    {% if is_ict_admin %}
+                        <td>
+
+                            {% if intern.is_active %}
+
+                                <a href="/deactivate-intern/{{ intern.id }}/"
+                                   class="btn btn-warning btn-sm">
+
+                                   Inactivate
+
+                                </a>
+
+                            {% else %}
+
+                                <a href="/activate-intern/{{ intern.id }}/"
+                                   class="btn btn-success btn-sm">
+
+                                   Active
+
+                                </a>
+
+                            {% endif %}
+
+                            <a href="/delete-intern/{{ intern.id }}/"
+                               class="btn btn-danger btn-sm">
+
+                               Delete
+
+                            </a>
+
+                        </td>
+                    {% endif %}
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="{% if is_ict_admin %}6{% else %}5{% endif %}" class="text-center">
+
+                        No interns found.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
